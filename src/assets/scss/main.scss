@@ -29,3 +29,21 @@ main {
 .lighten {
   color: $grey
 }
+
+.absolute {
+  position: absolute;
+  &.top {
+    top: 0
+  }
+  &.bottom {
+    bottom: 0;
+  }
+  &.right {
+    right: 0;
+  }
+}
+
+.action:hover {
+  cursor: pointer;
+  transform: scale(1.3);
+}

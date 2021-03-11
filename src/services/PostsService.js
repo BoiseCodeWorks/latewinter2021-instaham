@@ -17,6 +17,11 @@ class PostsService {
     AppState.votes[id] = res.data
   }
 
+  async delete(id) {
+    await api.delete('api/posts/' + id)
+    this.getAll()
+  }
+
   async vote(v) {
     await api.post('/api/votes', v)
     this.getVotesByPostId(v.post)

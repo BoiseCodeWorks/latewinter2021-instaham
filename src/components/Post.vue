@@ -1,18 +1,17 @@
 <template>
-  <div class="post col-md-3 my-2">
+  <div class="post col-md-4 my-2">
     <div class="card text-left m-">
-      <div class="text-right" v-if="post.creatorEmail == state.user.email">
-        <i class="fas fa-times text-danger" @click="deletePost"></i>
+      <div class="text-right absolute top right p-2 z-2" v-if="post.creatorEmail == state.user.email">
+        <i class="fas fa-times text-danger action" @click="deletePost"></i>
       </div>
-      <img class="card-img-top" :src="post.imgUrl" alt="">
-      <div class="card-body">
+      <div class="bg-dark">
+        <img class="card-img-top" :src="post.imgUrl" alt="">
+      </div>
+      <div class="card-body absolute bottom text-light p-2 d-flex justify-content-between w-100">
         <p><strong>{{ post.title }}</strong> | {{ state.voteCount }}</p>
-        <small class="lighten" v-if="post.creator">
-          {{ post.creator.name }}
-        </small>
         <div class="voting" v-if="state.user.isAuthenticated">
-          <i class="fas fa-thumbs-up mr-3" @click="vote(1)"></i>
-          <i class="fas fa-thumbs-down" @click="vote(-1)"></i>
+          <i class="fas fa-thumbs-up mr-3 action" @click="vote(1)"></i>
+          <i class="fas fa-thumbs-down action" @click="vote(-1)"></i>
         </div>
       </div>
     </div>
@@ -55,7 +54,7 @@ export default {
         postsService.vote(vote)
       },
       deletePost() {
-
+        postsService.delete(props.post.id)
       }
     }
   }
@@ -63,5 +62,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+img {
+  mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 25%);
+}
 
+.voting i:hover {
+  color: var(--primary);
+}
+
+.action:hover {
+  cursor: pointer;
+  transform: scale(1.2)
+}
+
+.z-2 {
+  z-index: 2;
+}
 </style>

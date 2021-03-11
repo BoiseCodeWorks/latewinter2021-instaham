@@ -7,35 +7,9 @@
     </div>
     <div class="row">
       <div class="col">
-        <button v-if="!state.showForm" type="button" class="btn btn-primary btn-lg" @click="state.showForm = true">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-post">
           Make Ham
         </button>
-        <button v-else type="button" class="btn btn-danger btn-lg" @click="state.showForm = false">
-          Burn the Ham
-        </button>
-        <form class="form-inline" @submit.prevent="createPost" v-if="state.showForm">
-          <div class="form-group">
-            <input type="text"
-                   name="title"
-                   id="title"
-                   class="form-control"
-                   placeholder="Enter post Title"
-                   aria-describedby="helpId"
-                   v-model="state.newPost.title"
-            >
-            <input type="text"
-                   name="imgUrl"
-                   id="imgUrl"
-                   class="form-control"
-                   placeholder="Enter img url"
-                   aria-describedby="helpId"
-                   v-model="state.newPost.imgUrl"
-            >
-            <button class="btn btn-success" type="submit">
-              Create
-            </button>
-          </div>
-        </form>
       </div>
     </div>
     <div class="row py-3">
@@ -49,7 +23,6 @@
 import { computed, onMounted, reactive } from 'vue'
 import { postsService } from '../services/PostsService'
 import { AppState } from '../AppState'
-import { logger } from '../utils/Logger'
 
 export default {
   name: 'Home',
@@ -57,23 +30,14 @@ export default {
     const state = reactive({
       loading: true,
       posts: computed(() => AppState.posts),
-      showForm: false,
-      newPost: {}
+      showForm: false
     })
     onMounted(async() => {
       await postsService.getAll()
       state.loading = false
     })
     return {
-      state,
-      async createPost() {
-        try {
-          await postsService.createPost(state.newPost)
-          state.newPost = {}
-        } catch (error) {
-          logger.log(error)
-        }
-      }
+      state
     }
   }
 }
