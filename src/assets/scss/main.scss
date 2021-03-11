@@ -1,0 +1,31 @@
+@import url(https://fonts.googleapis.com/css?family=Quicksand:200,300,400,700);
+@import "./_variables.scss";
+@import "bootstrap";
+@import "./_transitions.scss";
+@import "./_overrides.scss";
+
+$grey: #919191;
+
+:root {
+  --grey: #f6f6f6;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $body-bg;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+
+.lighten {
+  color: $grey
+}
