@@ -1,17 +1,17 @@
 <template>
-  <div class="post col-md-4 my-2">
-    <div class="card text-left m-">
+  <div class="post my-2">
+    <div class="card text-left">
       <div class="text-right absolute top right p-2 z-2" v-if="post.creatorEmail == state.user.email">
         <i class="fas fa-times text-danger action" @click="deletePost"></i>
       </div>
-      <div class="bg-dark">
+      <div class="bg-dark rounded">
         <img class="card-img-top" :src="post.imgUrl" alt="">
       </div>
       <div class="card-body absolute bottom text-light p-2 d-flex justify-content-between w-100">
         <p><strong>{{ post.title }}</strong> | {{ state.voteCount }}</p>
         <div class="voting" v-if="state.user.isAuthenticated">
-          <i class="fas fa-thumbs-up mr-3 action" @click="vote(1)"></i>
-          <i class="fas fa-thumbs-down action" @click="vote(-1)"></i>
+          <i :class="{'text-info': state.voted=== 1}" class="fas fa-thumbs-up mr-3 action" @click="vote(1)"></i>
+          <i :class="{'text-danger': state.voted=== -1}" class="fas fa-thumbs-down action" @click="vote(-1)"></i>
         </div>
       </div>
     </div>
@@ -39,6 +39,12 @@ export default {
           })
         }
         return total
+      }),
+      voted: computed(() => {
+        if (!state.user.email) return 0
+        const voted = state.votes.find(v => v.creatorEmail === state.user.email)
+        if (!voted) return 0
+        return voted.value
       }),
       editPost: false
     })

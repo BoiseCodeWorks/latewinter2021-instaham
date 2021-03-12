@@ -12,7 +12,7 @@
         </button>
       </div>
     </div>
-    <div class="row py-3">
+    <div class="py-3 card-columns">
       <i class="fas fa-spinner fa-spin" v-if="state.loading"></i>
       <Post v-else v-for="post in state.posts" :key="post.id" :post="post" />
     </div>
@@ -52,4 +52,5 @@ export default {
     width: 200px;
   }
 }
+
 </style>
